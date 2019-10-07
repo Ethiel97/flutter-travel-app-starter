@@ -1,54 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_travel_starter/places.dart';
 
-void main() => runApp(MyApp());
+import 'home_screen.dart';
 
-class MyApp extends StatelessWidget {
+void main() => runApp(TravelAppWrapper());
+
+class TravelAppWrapper extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: true,
+      title: 'Flutter Travel',
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Montserrat'),
+      home: TravelApp(title: 'Flutter Travel App'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+class TravelApp extends StatefulWidget {
+  TravelApp({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _TravelAppState createState() => _TravelAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _TravelAppState extends State<TravelApp> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+  final List<Widget> _screens = [
+    HomeScreen(),
+    Container(
+      child: Center(
+        child: Text("Second Screen"),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text("Third Screen"),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text("Fourth Screen"),
+      ),
+    ),
+  ];
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.white));
+  }
+
+  onItemClicked(index) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView(),
-    );
+        backgroundColor: Colors.white,
+        bottomNavigationBar: buildBottomNavigationBar(context),
+        body: _screens[_currentPage]);
+  }
+
+  Widget buildBottomNavigationBar(context) {
+    return Container();
   }
 }
