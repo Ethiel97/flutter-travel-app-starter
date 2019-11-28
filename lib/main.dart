@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_travel_starter/places.dart';
 
 import 'home_screen.dart';
 
@@ -29,8 +28,6 @@ class TravelApp extends StatefulWidget {
 }
 
 class _TravelAppState extends State<TravelApp> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-
   final List<Widget> _screens = [
     HomeScreen(),
     Container(
@@ -73,5 +70,18 @@ class _TravelAppState extends State<TravelApp> {
 
   Widget buildBottomNavigationBar(context) {
     return Container();
+  }
+
+  BottomNavigationBarItem buildBarItem(IconData icon, String title) {
+    return BottomNavigationBarItem(
+        activeIcon: Icon(
+          icon,
+          color: Colors.blueGrey,
+        ),
+        title: Text(title),
+        icon: Icon(
+          icon,
+          color: Colors.black,
+        ));
   }
 }
